@@ -26,7 +26,7 @@ export const auth = betterAuth({
     },
 
     plugins: [
-        jwt()
+        jwt(),
     ],
 
     session: {
