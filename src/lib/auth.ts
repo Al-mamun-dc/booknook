@@ -6,8 +6,7 @@ import { jwt } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db("booknook");
-console.log("Google Client ID:", !!process.env.GOOGLE_CLIENT_ID);
-console.log("Google Client Secret:", !!process.env.GOOGLE_CLIENT_SECRET);
+
 export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
 
