@@ -1,20 +1,18 @@
 
 import BookList from "@/components/BookList";
 
-
 const AllBooksPage = async () => {
-
-  
-
   const res = await fetch("http://localhost:8000/all-books", {
-   cache: "no-store",
+    cache: "no-store",
   });
 
   if (!res.ok) {
     throw new Error("Failed to fetch books");
   }
 
-  const data = await res.json();
+  const books = await res.json();
+
+  
 
   return (
     <main className="min-h-screen bg-white px-4 py-10 sm:px-8">
@@ -28,7 +26,7 @@ const AllBooksPage = async () => {
           </p>
         </div>
 
-        <BookList books={data} />
+        <BookList books={books} />
       </section>
     </main>
   );
