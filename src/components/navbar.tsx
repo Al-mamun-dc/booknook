@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, User } from "lucide-react";
+import { ChevronDown, User, Menu, X } from "lucide-react";
 
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
@@ -20,17 +20,23 @@ const links = [
 
 export function Navbar({ className }: { className?: string }) {
   const { data: session, isPending } = authClient.useSession();
+
   console.log("Session Image:", session?.user?.image);
+
   const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   async function handleLogout() {
     await authClient.signOut();
     setOpen(false);
+    setMobileOpen(false);
   }
 
   return (
     <header className={cn("relative z-20 bg-blue-900", className)}>
       <div className="mx-auto flex h-14 max-w-7xl items-center px-4 sm:px-6">
+
+        {/* Logo */}
         <Link href="/" className="flex shrink-0 items-center">
           <Image
             src="/images/booknook-logo.png"
@@ -42,6 +48,7 @@ export function Navbar({ className }: { className?: string }) {
           />
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="mx-auto hidden items-center gap-7 text-sm md:flex">
           {links
             .filter((link) => !link.private || session)
@@ -56,7 +63,10 @@ export function Navbar({ className }: { className?: string }) {
             ))}
         </nav>
 
+        {/* Right Side */}
         <div className="ml-auto flex items-center gap-2.5 md:ml-0">
+
+          {/* Login & Sign Up */}
           {!isPending && !session && (
             <>
               <Link href="/login">
@@ -74,6 +84,7 @@ export function Navbar({ className }: { className?: string }) {
             </>
           )}
 
+          {/* Profile Dropdown */}
           {!isPending && session && (
             <div className="relative">
               <button
@@ -98,6 +109,7 @@ export function Navbar({ className }: { className?: string }) {
 
               {open && (
                 <div className="absolute right-0 top-12 z-50 w-56 rounded-lg border bg-white p-3 text-gray-800 shadow-lg">
+
                   <p className="font-semibold">
                     {session.user.name}
                   </p>
@@ -126,8 +138,42 @@ export function Navbar({ className }: { className?: string }) {
               )}
             </div>
           )}
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-800 md:hidden"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={25} /> : <Menu size={25} />}
+          </button>
+
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {mobileOpen && (
+        <nav className="border-t border-blue-700 bg-blue-900 px-4 py-4 md:hidden">
+
+          <div className="flex flex-col gap-1">
+            {links
+              .filter((link) => !link.private || session)
+              .map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-3 text-sm font-medium text-white/90 transition-colors hover:bg-blue-800 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
+          </div>
+
+        </nav>
+      )}
+
     </header>
   );
 }
