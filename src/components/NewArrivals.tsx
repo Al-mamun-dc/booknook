@@ -41,6 +41,7 @@ export default async function NewArrivals() {
                                     fill
                                     sizes="(max-width: 640px) 50vw, 300px"
                                     className="object-cover"
+                                    unoptimized
                                 />
                             </div>
                         ) : (
