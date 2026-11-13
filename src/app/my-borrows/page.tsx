@@ -48,7 +48,7 @@ const MyBorrowsPage = () => {
                 }
 
                 const res = await fetch(
-                    "http://localhost:8000/my-borrows",
+                   `${process.env.NEXT_PUBLIC_URI_SERVER}/my-borrows`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const MyBorrowsPage = () => {
             }
 
             const res = await fetch(
-                `http://localhost:8000/return-book/${id}`,
+               `${process.env.NEXT_PUBLIC_URI_SERVER}/return-book/${id}`,
                 {
                     method: "PATCH",
                     headers: {

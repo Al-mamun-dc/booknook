@@ -34,7 +34,7 @@ export default function MyBooksPage() {
                 return;
             }
 
-            const res = await fetch("http://localhost:8000/my-books", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URI_SERVER}/my-books`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -80,7 +80,7 @@ export default function MyBooksPage() {
             }
 
             const res = await fetch(
-                `http://localhost:8000/all-books/${editBook._id}`,
+                `${process.env.NEXT_PUBLIC_URI_SERVER}/all-books/${editBook._id}`,
                 {
                     method: "PATCH",
                     headers: {
@@ -135,7 +135,7 @@ export default function MyBooksPage() {
             }
 
             const res = await fetch(
-                `http://localhost:8000/all-books/${deleteBook._id}`,
+                `${process.env.NEXT_PUBLIC_URI_SERVER}/all-books/${deleteBook._id}`,
                 {
                     method: "DELETE",
                     headers: {

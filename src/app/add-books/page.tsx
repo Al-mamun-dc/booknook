@@ -158,7 +158,7 @@ export default function AddBook() {
             }
 
             // 4. Save book in MongoDB through backend
-            const res = await fetch("http://localhost:8000/add-books", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URI_SERVER}/add-books`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

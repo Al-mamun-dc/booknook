@@ -44,7 +44,7 @@ const BorrowButton = ({
                 return;
             }
 
-            const res = await fetch("http://localhost:8000/borrow-books", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URI_SERVER}/borrow-books`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

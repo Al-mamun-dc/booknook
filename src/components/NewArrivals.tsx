@@ -11,7 +11,7 @@ type Book = {
 };
 
 export default async function NewArrivals() {
-    const res = await fetch("http://localhost:8000/new-arrivals", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URI_SERVER}/new-arrivals`, {
         cache: "no-store",
     });
 
