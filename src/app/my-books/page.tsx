@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { toast } from "react-toastify";
 
 type Book = {
     _id: string;
@@ -55,14 +55,14 @@ export default function MyBooksPage() {
         }
     }
 
-    
-   useEffect(() => {
-    const loadBooks = async () => {
-        await fetchBooks();
-    };
+    useEffect(() => {
+        const loadBooks = async () => {
+            await fetchBooks();
+        };
 
-    loadBooks();
-}, []);
+        loadBooks();
+    }, []);
+
     // Update Book
     async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -78,7 +78,6 @@ export default function MyBooksPage() {
                 setMessage("Please login first!");
                 return;
             }
-        
 
             const res = await fetch(
                 `http://localhost:8000/all-books/${editBook._id}`,
@@ -111,12 +110,11 @@ export default function MyBooksPage() {
             );
 
             setEditBook(null);
-            setMessage("Book updated successfully!");
+            toast.success("Book updated successfully!");
 
-            setTimeout(() => setMessage(""), 2500);
         } catch (error) {
             console.log("Error updating book:", error);
-            setMessage("Failed to update book!");
+            toast.error("Failed to update book!");
         } finally {
             setUpdating(false);
         }
@@ -157,12 +155,11 @@ export default function MyBooksPage() {
             );
 
             setDeleteBook(null);
-            setMessage("Book deleted successfully!");
+            toast.success("Book deleted successfully!");
 
-            setTimeout(() => setMessage(""), 2500);
         } catch (error) {
             console.log("Error deleting book:", error);
-            setMessage("Failed to delete book!");
+            toast.error("Failed to delete book!");
         } finally {
             setDeleting(false);
         }
