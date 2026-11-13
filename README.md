@@ -28,6 +28,7 @@
 - MongoDB
 - Better Auth
 - JWT
+-ShadCn UI 
 
 ## 🚀 Getting Started
 
