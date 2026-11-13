@@ -76,6 +76,7 @@ export default function BookList({ books }: { books: Book[] }) {
                                     width={160}
                                     height={192}
                                     className="h-48 w-40 rounded-md object-cover"
+                                    unoptimized
                                 />
                             ) : (
                                 <div className="flex h-48 w-40 items-center justify-center rounded-md bg-gray-100 text-sm text-gray-400">

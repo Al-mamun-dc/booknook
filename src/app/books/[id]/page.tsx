@@ -1,20 +1,26 @@
 
 import BorrowButton from '@/components/BorrowButton';
-
 import { getTokenFromServer } from '@/lib/getTokenFromServer';
-
 import Image from 'next/image';
 import React from 'react';
 
-const BooksDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+const BooksDetailsPage = async ({
+    params,
+}: {
+    params: Promise<{ id: string }>
+}) => {
     const { id } = await params;
-    const token= await getTokenFromServer()
+    const token = await getTokenFromServer();
+
     const res = await fetch(`http://localhost:8000/all-books/${id}`, {
         headers: {
             authorization: `Bearer ${token}`
         }
     });
+
     const data = await res.json();
+
+    const isAvailable = Number(data.totalCopies) > 0;
 
     return (
         <div className="max-w-5xl mx-auto px-5 py-12">
@@ -31,6 +37,7 @@ const BooksDetailsPage = async ({ params }: { params: Promise<{ id: string }> })
                             width={350}
                             height={350}
                             className="w-72 h-80 object-cover rounded-lg shadow-md"
+                            unoptimized
                         />
                     </div>
 
@@ -49,9 +56,10 @@ const BooksDetailsPage = async ({ params }: { params: Promise<{ id: string }> })
                         </span>
 
                         <p className="text-gray-600 mt-5 leading-7">
-                            {data.Description}
+                            {data.description}
                         </p>
 
+                        {/* Total Copies */}
                         <div className="flex items-center gap-2 mt-6 mb-4">
                             <h3 className="font-bold text-gray-800">
                                 Total Copies:
@@ -60,6 +68,19 @@ const BooksDetailsPage = async ({ params }: { params: Promise<{ id: string }> })
                             <span className="bg-sky-100 text-sky-700 px-3 py-1 rounded-md font-bold">
                                 {data.totalCopies}
                             </span>
+                        </div>
+
+                        {/* Availability Status */}
+                        <div className="mb-4">
+                            {isAvailable ? (
+                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-sm font-semibold">
+                                    Available
+                                </span>
+                            ) : (
+                                <span className="bg-red-100 text-red-700 px-3 py-1 rounded-md text-sm font-semibold">
+                                    Not Available
+                                </span>
+                            )}
                         </div>
 
                         {/* Who Added This Book */}
@@ -73,11 +94,22 @@ const BooksDetailsPage = async ({ params }: { params: Promise<{ id: string }> })
                             </p>
                         </div>
 
-                        <BorrowButton
-                            bookId={data._id}
-                            bookTitle={data.title}
-                            bookImage={data.imageUrl}
-                        />
+                        {/* Borrow Button */}
+                        {isAvailable ? (
+                            <BorrowButton
+                                bookId={data._id}
+                                bookTitle={data.title}
+                                bookImage={data.imageUrl}
+                            />
+                        ) : (
+                            <button
+                                disabled
+                                className="bg-gray-400 text-white px-6 py-3 rounded-lg cursor-not-allowed font-semibold opacity-70"
+                            >
+                                Borrow Unavailable
+                            </button>
+                        )}
+
                     </div>
 
                 </div>

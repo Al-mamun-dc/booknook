@@ -56,9 +56,13 @@ export default function MyBooksPage() {
     }
 
     
-    useEffect(() => {
-        fetchBooks();
-    }, []);
+   useEffect(() => {
+    const loadBooks = async () => {
+        await fetchBooks();
+    };
+
+    loadBooks();
+}, []);
     // Update Book
     async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
