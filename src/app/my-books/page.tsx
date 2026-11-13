@@ -215,7 +215,7 @@ export default function MyBooksPage() {
                                 {/* Book Image */}
                                 <div className="flex h-52 w-full items-center justify-center overflow-hidden bg-gray-100">
                                     {book.imageUrl ? (
-                                        <imge
+                                        <img
                                             src={book.imageUrl}
                                             alt={book.title}
                                             className="h-full w-full object-contain"
