@@ -13,9 +13,9 @@ import { authClient } from "@/lib/auth-client";
 const links = [
   { label: "Home", href: "/" },
   { label: "All Books", href: "/all-books" },
-  { label: "Add Book", href: "/add-books" },
-  { label: "My Books", href: "/my-books" },
-  { label: "My Borrows", href: "/my-borrows" },
+  { label: "Add Book", href: "/add-books", private: true },
+  { label: "My Books", href: "/my-books", private: true },
+  { label: "My Borrows", href: "/my-borrows", private: true },
 ];
 
 export function Navbar({ className }: { className?: string }) {
@@ -43,15 +43,17 @@ export function Navbar({ className }: { className?: string }) {
         </Link>
 
         <nav className="mx-auto hidden items-center gap-7 text-sm md:flex">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-medium text-white/85 transition-colors hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links
+            .filter((link) => !link.private || session)
+            .map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="font-medium text-white/85 transition-colors hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
         </nav>
 
         <div className="ml-auto flex items-center gap-2.5 md:ml-0">
@@ -105,6 +107,14 @@ export function Navbar({ className }: { className?: string }) {
                   </p>
 
                   <hr className="mb-2" />
+
+                  <Link
+                    href="/my-profile"
+                    onClick={() => setOpen(false)}
+                    className="block w-full rounded-md px-3 py-2 text-left text-sm hover:bg-gray-100"
+                  >
+                    My Profile
+                  </Link>
 
                   <button
                     onClick={handleLogout}
