@@ -3,12 +3,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,8 +31,18 @@ export default function LoginPage() {
             }
 
             toast.success("Login successful!");
-            router.push("/");
+
+            const redirectTo = searchParams.get("redirect") || "/";
+
+            // Prevent external redirects
+            const safeRedirect = redirectTo.startsWith("/") &&
+                !redirectTo.startsWith("//")
+                ? redirectTo
+                : "/";
+
+            router.replace(safeRedirect);
             router.refresh();
+
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong!");
@@ -42,9 +53,16 @@ export default function LoginPage() {
 
     async function handleGoogleLogin() {
         try {
+            const redirectTo = searchParams.get("redirect") || "/";
+
+            const safeRedirect =
+                redirectTo.startsWith("/") && !redirectTo.startsWith("//")
+                    ? redirectTo
+                    : "/";
+
             await authClient.signIn.social({
                 provider: "google",
-                callbackURL: "/",
+                callbackURL: safeRedirect,
             });
         } catch (error) {
             console.log(error);
@@ -94,9 +112,7 @@ export default function LoginPage() {
                         />
                     </div>
 
-                    <div className="text-right">
-                        
-                    </div>
+                    <div className="text-right"></div>
 
                     <button
                         type="submit"

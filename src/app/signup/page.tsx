@@ -2,12 +2,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,10 +17,16 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
+  const redirectTo = searchParams.get("redirect") || "/";
+
+  const safeRedirect =
+    redirectTo.startsWith("/") && !redirectTo.startsWith("//")
+      ? redirectTo
+      : "/";
+
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // Password validation
     if (!/[A-Z]/.test(password)) {
       setPasswordError("Password must contain an uppercase letter.");
       return;
@@ -66,7 +73,7 @@ export default function SignupPage() {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: safeRedirect,
       });
     } catch (error) {
       toast.error("Google login failed!");
