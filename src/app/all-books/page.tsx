@@ -1,16 +1,13 @@
 
 import BookList from "@/components/BookList";
-import { getTokenFromServer } from "@/lib/getTokenFromServer";
+
 
 const AllBooksPage = async () => {
 
-  const token = await getTokenFromServer();
+  
 
   const res = await fetch("http://localhost:8000/all-books", {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+   cache: "no-store",
   });
 
   if (!res.ok) {

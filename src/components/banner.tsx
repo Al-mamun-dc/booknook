@@ -55,7 +55,7 @@ const Banner = () => {
                 </p>
 
                 <Link
-                  href="/books"
+                  href="/all-books"
                   className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-7 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700"
                 >
                   Browse Books <span>→</span>

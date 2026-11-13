@@ -17,6 +17,7 @@ type Book = {
 export default function BookList({ books }: { books: Book[] }) {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All Categories");
+    const [failedImages, setFailedImages] = useState<string[]>([]);
 
     const categories = [
         "All Categories",
@@ -69,7 +70,7 @@ export default function BookList({ books }: { books: Book[] }) {
                         className="overflow-hidden rounded-xl border border-gray-200 bg-white p-3 shadow-sm transition hover:shadow-md"
                     >
                         <div className="flex justify-center">
-                            {book.imageUrl ? (
+                            {book.imageUrl && !failedImages.includes(book._id) ? (
                                 <Image
                                     src={book.imageUrl}
                                     alt={book.title}
@@ -77,6 +78,11 @@ export default function BookList({ books }: { books: Book[] }) {
                                     height={192}
                                     className="h-48 w-40 rounded-md object-cover"
                                     unoptimized
+                                    onError={() =>
+                                        setFailedImages((prev) =>
+                                            [...prev, book._id]
+                                        )
+                                    }
                                 />
                             ) : (
                                 <div className="flex h-48 w-40 items-center justify-center rounded-md bg-gray-100 text-sm text-gray-400">
@@ -90,7 +96,9 @@ export default function BookList({ books }: { books: Book[] }) {
                                 {book.title}
                             </h2>
 
-                            <p className="text-sm text-gray-600">{book.category}</p>
+                            <p className="text-sm text-gray-600">
+                                {book.category}
+                            </p>
 
                             <p className="mt-1 text-sm text-gray-500">
                                 By {book.author}

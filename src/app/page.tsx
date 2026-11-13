@@ -1,9 +1,10 @@
 
 import Banner from "@/components/banner"
+import ExtraSections from "@/components/ExtraSections"
 import NewArrivals from "@/components/NewArrivals"
 
 
-import { Testimonials } from "@/components/testimonials"
+
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
      
       <Banner/>
       <NewArrivals />
-      <Testimonials />
+      <ExtraSections/>
      
     </main>
   )
