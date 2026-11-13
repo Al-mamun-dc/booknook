@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 BookNook – Your Online Library
 
-## Getting Started
+**BookNook** is a small online library platform where users can explore books, add new books, borrow their favorite books, and manage their reading collections.
 
-First, run the development server:
+🌐 **Live Website:** https://boonook-client-alpha.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User Authentication:** Secure user registration and login system using Better Auth.
+- **Browse Books:** Explore a collection of books with details such as title, author, category, and description.
+- **Add New Books:** Authenticated users can add new books with images and information.
+- **Update & Delete Books:** Users can manage their own uploaded books.
+- **Borrow Books:** Users can borrow available books through a simple borrowing system.
+- **My Books:** View and manage books added by the logged-in user.
+- **My Borrows:** View borrowed books and manage borrowing records.
+- **Search & Filter:** Find books easily using search and category filters.
+- **Responsive Design:** Enjoy a smooth experience on desktop, tablet, and mobile devices.
+- **Protected Routes:** Secure private pages and API endpoints using authentication and JWT verification.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth
+- JWT
 
-## Learn More
+## 🚀 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository.
+2. Install dependencies using `npm install`.
+3. Configure the required environment variables.
+4. Run the development server using `npm run dev`.
+5. Open `http://localhost:3000` in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👨‍💻 Developer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed with ❤️ as a library management project.
