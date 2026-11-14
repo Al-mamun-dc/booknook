@@ -21,8 +21,6 @@ const links = [
 export function Navbar({ className }: { className?: string }) {
   const { data: session, isPending } = authClient.useSession();
 
-  console.log("Session Image:", session?.user?.image);
-
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -44,19 +42,18 @@ export function Navbar({ className }: { className?: string }) {
             width={132}
             height={34}
             className="h-8 w-auto"
-            priority
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="mx-auto hidden items-center gap-7 text-sm md:flex">
+        <nav className="mx-auto hidden items-center gap-7 text-sm lg:flex">
           {links
             .filter((link) => !link.private || session)
             .map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-medium text-white/85 transition-colors hover:text-white"
+                className="font-medium text-white/85 hover:text-white"
               >
                 {link.label}
               </Link>
@@ -64,24 +61,24 @@ export function Navbar({ className }: { className?: string }) {
         </nav>
 
         {/* Right Side */}
-        <div className="ml-auto flex items-center gap-2.5 md:ml-0">
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
 
-          {/* Login & Sign Up */}
+          {/* Desktop Login & Signup */}
           {!isPending && !session && (
-            <>
+            <div className="hidden items-center gap-2 lg:flex">
               <Link href="/login">
-                <Button className="h-9 rounded-md border border-blue-300/60 bg-blue-600 px-4 text-white hover:bg-blue-700">
+                <Button className="h-9 bg-blue-600 px-4 text-white hover:bg-blue-700">
                   Login
                 </Button>
               </Link>
 
               <Link
                 href="/signup"
-                className="inline-flex h-9 items-center justify-center rounded-md bg-blue-600 px-4 text-white hover:bg-blue-700"
+                className="flex h-9 items-center rounded-md bg-blue-600 px-4 text-white hover:bg-blue-700"
               >
                 Sign Up
               </Link>
-            </>
+            </div>
           )}
 
           {/* Profile Dropdown */}
@@ -93,7 +90,7 @@ export function Navbar({ className }: { className?: string }) {
               >
                 {session.user.image ? (
                   <img
-                    src={session.user.image || ""}
+                    src={session.user.image}
                     alt="Profile"
                     referrerPolicy="no-referrer"
                     className="h-9 w-9 rounded-full border-2 border-white object-cover"
@@ -123,7 +120,7 @@ export function Navbar({ className }: { className?: string }) {
                   <Link
                     href="/my-profile"
                     onClick={() => setOpen(false)}
-                    className="block w-full rounded-md px-3 py-2 text-left text-sm hover:bg-gray-100"
+                    className="block rounded-md px-3 py-2 text-sm hover:bg-gray-100"
                   >
                     My Profile
                   </Link>
@@ -139,11 +136,11 @@ export function Navbar({ className }: { className?: string }) {
             </div>
           )}
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-800 md:hidden"
-            aria-label="Toggle navigation menu"
+            className="rounded-md p-2 text-white hover:bg-blue-800 lg:hidden"
+            aria-label="Toggle menu"
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={25} /> : <Menu size={25} />}
@@ -152,11 +149,12 @@ export function Navbar({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Menu */}
       {mobileOpen && (
-        <nav className="border-t border-blue-700 bg-blue-900 px-4 py-4 md:hidden">
+        <nav className="border-t border-blue-700 bg-blue-900 px-4 py-4 lg:hidden">
 
           <div className="flex flex-col gap-1">
+
             {links
               .filter((link) => !link.private || session)
               .map((link) => (
@@ -164,13 +162,36 @@ export function Navbar({ className }: { className?: string }) {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="rounded-md px-3 py-3 text-sm font-medium text-white/90 transition-colors hover:bg-blue-800 hover:text-white"
+                  className="rounded-md px-3 py-3 text-sm font-medium text-white hover:bg-blue-800"
                 >
                   {link.label}
                 </Link>
               ))}
-          </div>
 
+            {/* Mobile Login & Signup */}
+            {!isPending && !session && (
+              <div className="mt-2 flex gap-2 border-t border-blue-700 pt-3">
+
+                <Link
+                  href="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 rounded-md bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex-1 rounded-md bg-blue-600 py-2 text-center text-white hover:bg-blue-700"
+                >
+                  Sign Up
+                </Link>
+
+              </div>
+            )}
+
+          </div>
         </nav>
       )}
 
